@@ -20,5 +20,3 @@ def create_dataframe(databasePath):
         UNION 
         select video_id, category_id, "GB" as language from GBvideos;""", conn)
         return(myTable)
-    
-    

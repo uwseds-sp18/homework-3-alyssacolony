@@ -8,8 +8,8 @@ import unittest
 
 
 print("Unit tests to validate that we have the right column names, all five languages are present, the DF has at least 10K rows, and that Id and Language are a key:")
-df = hw.create_dataframe('Data-Essentials/class.db')
-
+path = '../../LectureNotes/Data-Essentials/class.db'
+df = hw.create_dataframe(path)
 class UnitTests(unittest.TestCase):
 	# df = hw.create_dataframe('Data-Essentials/class.db')
 	# columns = list(df)
@@ -24,20 +24,11 @@ class UnitTests(unittest.TestCase):
 
 	def test_IdLanIsKey(self):
 		self.assertTrue(len(df[['video_id', 'language']].drop_duplicates()) == len(df.drop_duplicates()))
- 
+
+	def test_invalid_path_error(self):
+ 		self.assertRaises(ValueError, hw.create_dataframe, 'badPath')
+
 suite = unittest.TestLoader().loadTestsFromTestCase(UnitTests)
 _ = unittest.TextTestRunner().run(suite)
 
 
-print("Edge test to see if correct exception (assignment defined \"ValueError\" as the correct exception) is generated when an invalid path is provided")
-paths = ['mybadpath',
-        3,
-        [3,4,"five"]]
-
-for path in paths:
-    try:
-        hw.create_dataframe(path)
-    except ValueError:
-        print("%s raised a value error" % str(path))
-    except:
-        print("%s raised a different type of error" % str(path))
